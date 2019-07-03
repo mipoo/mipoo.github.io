@@ -1,0 +1,82 @@
+
+<!DOCTYPE html>
+<html lang="zh-cmn-Hans">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=0, minimum-scale=1.0, maximum-scale=1.0">
+    <meta name="format-detection" content="telephone=no, date=no, address=no, email=no, url=no">
+    <meta name="onepiece:download"
+          weixin="http://android.myapp.com/myapp/detail.htm?apkName=com.yy.onepiece"
+          ios="https://itunes.apple.com/cn/app/%E4%B8%80%E4%BB%B6/id1229345061?l=en&mt=8"
+          android="http://yydl.duowan.com/mobile/onepiece-android/1.0.3/onepiece-1.0.3.apk">
+    <title>一件 - YY出品专注手工艺、玉石、文玩的内容电商平台，匠心独具，仅此一件！</title>
+    <script>
+        if (!(/Android|webOS|iPhone|Windows Phone|iPod|iPad|BlackBerry|SymbianOS/i.test(window.navigator.userAgent))){
+            //window.location.href = 'pc.html';
+        } else {
+            if (/(^|\?|&)download($|&)/.test(window.location.search)) {
+                if (/micromessenger/i.test(window.navigator.userAgent)) {
+                    window.location.href = document.querySelector('meta[name="onepiece:download"]').getAttribute('weixin');
+                } else {
+                    if (/iPhone|iPod|iPad/i.test(window.navigator.userAgent)) {
+                        window.location.href = document.querySelector('meta[name="onepiece:download"]').getAttribute('ios');
+                    }
+                }
+            }
+        }
+    </script>
+    <meta name="description" content="一件">
+    <!-- <link rel="stylesheet" href="http://legox.yy.com/assets/yijian/homepage/css/mobile.css"> -->
+    <link rel="stylesheet" href="//s1.yy.com/ued_web_static/project/yijian/homepage/2.0/css/mobile.css">
+    <link href="css/mobile.1806061123.css" rel="stylesheet">
+</head>
+<body>
+<div class="page abu">
+    <div class="content">
+        <div class="logo">一件</div>
+        <div class="slogon">匠心独具 仅此一件</div>
+        <div class="line"></div>
+        <div class="entity">
+            <div class="entity-content">
+                <input data-name="yyNo" type="number" placeholder="请输入您的yy号">
+                <button class="downloadBanner-btn" data-role="downloadBanner"></button>
+            </div>
+        </div>
+        <a class="button" href="###">立即下载</a>
+    </div>
+    <div class="bottom">
+        <p class="statement">YY 旗下直播电商平台</p>
+        <p class="copyright">
+            <span>公司：广州华多网络科技有限公司</span>
+            <span>电话（+8620）82120000</span>
+            <span>粤公网安备44011302000539号</span>
+        </p>
+    </div>
+    <div data-role="banner-dialog" class="dialog">
+        <div class="overlay" data-role="dialog-close"></div>
+        <div class="dialog-content">
+            <button class="close" data-role="dialog-close">×</button>
+            <div class="img-wrap">
+                <img data-role="banner-review">
+            </div>
+            <p>长按图片保存到手机即可</p>
+        </div>
+    </div>
+
+    <div data-role="error-dialog" class="dialog error-dialog">
+        <div class="overlay" data-role="dialog-close"></div>
+        <div class="dialog-content">
+            <button class="close" data-role="dialog-close">×</button>
+            <div class="img-wrap">
+                <img data-role="banner-review" src="img/ivy-wechat.png">
+            </div>
+            <p class="label">ooh~ 没有找到此yy号<span data-label="error-yyNo"></span>的封面图呢，请确认您的YY号是否正确，如有需要，请联系YY一件官方人员-寻木（YY:123456789）</p>
+        </div>
+    </div>
+</div>
+<script src="https://s1.yy.com/ued_web_static/??lib/jquery/jquery-1.12.4.min.js"></script>
+<script src="js/mobile.1806061123.js"></script>
+<!-- <script src="http://legox.yy.com/assets/yijian/homepage/js/mobile.js"></script> -->
+<script src="//s1.yy.com/ued_web_static/project/yijian/homepage/2.0/js/mobile.js"></script>
+</body>
+</html>
