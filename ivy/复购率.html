@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>复购率</title>
+    <style>
+        table td {
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+
+<div id="root">
+    <div><textarea rows="20" style="width: 600px;" v-model="inputStr"
+                   placeholder="每行的内容为空格隔开的 日期+uid ， 多条记录换行隔开"></textarea></div>
+    <div>
+        <p><select v-model="cycle" style="width: 50px;">
+            <option v-for="c in cycleList" :value="c">{{c}}</option>
+        </select> 天复购率
+        </p>
+    </div>
+    <p>
+        <button @click="exec">计算</button>
+    </p>
+    <p>
+    <table border="1" cellspacing="0" cellpadding="0" v-show="resultTable.length">
+        <thead>
+        <th>日期</th>
+        <th>下单人数</th>
+        <th>复购率</th>
+        <th>复购人数</th>
+        <th>2次复购率</th>
+        <th>2次复购人数</th>
+        <th>3次复购率</th>
+        <th>3次复购人数</th>
+        <th>4次及以上复购率</th>
+        <th>4次及以上复购人数</th>
+        </thead>
+        <tbody>
+        <tr v-for="row in resultTable">
+            <td v-text="row.date"></td>
+            <td v-text="row.total"></td>
+            <td v-text="percent(row.f2/row.total)"></td>
+            <td v-text="row.f2"></td>
+            <td v-text="percent(row.f3/row.total)"></td>
+            <td v-text="row.f3"></td>
+            <td v-text="percent(row.f4/row.total)"></td>
+            <td v-text="row.f4"></td>
+            <td v-text="percent(row.f5/row.total)"></td>
+            <td v-text="row.f5"></td>
+        </tr>
+        </tbody>
+    </table>
+    </p>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/vue"></script>
+<script>
+    (function () {
+        window.vm = new Vue({
+            el: "#root",
+            data: {
+                inputStr: "",
+                cycle: 7,
+                cycleList: [7, 14, 30],
+                resultTable: []
+            },
+            computed: {
+                originData: function () {
+                    console.info(111)
+                    var list = [];
+                    try {
+                        this.inputStr.split("\n").forEach(function (line) {
+                            if (!line || !line.trim()) {
+                                return;
+                            }
+                            var matchList = line.trim().match(/^([^\s]+)(\s+.*)?\s+(\w+)$/);
+                            if (matchList && matchList.length > 3) {
+                                list.push({
+                                    uid: matchList[3],
+                                    date: new Date(matchList[1])
+                                })
+                            }
+                        });
+                    } catch (e) {
+                        alert(e);
+                        throw e;
+                    }
+                    return list;
+                },
+                mapGroupDate: function () {
+                    var map = {};
+                    this.originData.forEach(function (data) {
+                        (map[data.date] || (map[data.date] = [])).push(data.uid);
+                    });
+                    return map
+                },
+                dateList: function () {
+                    return Object.keys(this.mapGroupDate).map(function (key) {
+                        return new Date(key)
+                    }).sort(function (d1, d2) {
+                        return d1.getTime() - d2.getTime()
+                    })
+                },
+                mapGroupUid: function () {
+                    var map = {};
+                    this.originData.forEach(function (data) {
+                        (map[data.uid] || (map[data.uid] = [])).push(data.date);
+                        map[data.uid].sort()
+                    });
+                    return map
+                }
+            },
+            methods: {
+                exec: function () {
+                    var resultTable = this.resultTable = [];
+                    for (var i = 0; i < this.dateList.length; ++i) {
+                        var date = this.dateList[i];
+                        var uidList = this.mapGroupDate[date];
+                        var total = uidList.length;
+                        var endDate = new Date(date);
+                        endDate.setDate(date.getDate() + this.cycle - 1);
+                        if (endDate.getTime() > this.dateList[this.dateList.length - 1].getTime()) {
+                            break;
+                        }
+                        var result = {
+                            date: (1900 + date.getYear()) + "-" + (date.getMonth() + 1) + "-" + date.getDate(),
+                            total: total,
+                            f2: 0,
+                            f3: 0,
+                            f4: 0,
+                            f5: 0
+
+                        };
+                        resultTable.push(result)
+                        var mapGroupUid = this.mapGroupUid;
+                        uidList.forEach(function (uid) {
+                            var list = mapGroupUid[uid];
+                            var count = 0;
+                            for (; count < list.length; ++count) {
+                                if (list[i] > endDate) {
+                                    break
+                                }
+                            }
+                            if (count <= 1) {
+                                return
+                            }
+                            switch (count) {
+                                case 2:
+                                    result.f2++;
+                                    break;
+                                case 3:
+                                    result.f2++;
+                                    result.f3++;
+                                    break;
+                                case 4:
+                                    result.f2++;
+                                    result.f3++;
+                                    result.f4++;
+                                    break;
+                                default:
+                                    result.f2++;
+                                    result.f3++;
+                                    result.f4++;
+                                    result.f5++;
+                                    break;
+                            }
+                        })
+                    }
+                    this.resultTable = resultTable
+                },
+                percent: function (val) {
+                    return Number(val * 100).toFixed(2) + "%"
+                }
+            }
+
+        })
+    })()
+</script>
+</body>
+</html>

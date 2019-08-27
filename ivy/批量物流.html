@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>批量物流</title>
+</head>
+<body>
+
+<textarea id="text" rows="20" style="width: 600px;">
+</textarea>
+
+<p>
+    选择物流：
+    <select id="wl" placeholder="请选择发货物流公司(可为空)">
+        <option value="YD">韵达快递</option>
+        <option value="SF">顺丰快递</option>
+        <option value="STO">申通快递</option>
+        <option value="YTO">圆通速递</option>
+        <option value="ZTO">中通速递</option>
+        <option value="EMS">EMS</option>
+        <option value="DBL">德邦</option>
+        <option value="ZJS">宅急送</option>
+        <option value="HTKY">百世快递</option>
+        <option value="RFD">如风达</option>
+        <option value="QFKD">全峰快递</option>
+        <option value="HHTT">天天快递</option>
+        <option value="AMAZON">亚马逊物流</option>
+        <option value="JD">京东物流</option>
+        <option value="GTSD">高铁速递</option>
+        <option value="SHWL">盛辉物流</option>
+        <option value="QUICK">快客快递</option>
+        <option value="HOAU">天地华宇</option>
+        <option value="WJWL">万家物流</option>
+        <option value="XFEX">信丰快递</option>
+        <option value="SFWL">盛丰物流</option>
+        <option value="YFEX">越丰物流</option>
+        <option value="LHT">联昊通速递</option>
+        <option value="PADTF">平安达腾飞快递</option>
+        <option value="SAD">赛澳递</option>
+        <option value="QCKD">全晨快递</option>
+        <option value="JIUYE">九曳供应链</option>
+        <option value="NEDA">能达速递</option>
+        <option value="UAPEX">全一快递</option>
+        <option value="PANEX">泛捷快递</option>
+        <option value="SDWL">上大物流</option>
+        <option value="HYLSD">好来运快递</option>
+        <option value="BTWL">百世快运</option>
+        <option value="SBWL">盛邦物流</option>
+        <option value="CDSTKY">成都善途速运</option>
+        <option value="JYKD">晋越快递</option>
+        <option value="SAWL">圣安物流</option>
+        <option value="DTWL">大田物流</option>
+        <option value="JYWL">佳怡物流</option>
+        <option value="hq568">华强物流</option>
+        <option value="KYWL">跨越物流</option>
+        <option value="DSWL">D速物流</option>
+        <option value="TSSTO">唐山申通</option>
+        <option value="AYCA">澳邮专线</option>
+        <option value="UEQ">UEQ Express</option>
+        <option value="QRT">全日通快递</option>
+        <option value="YCWL">远成物流</option>
+        <option value="COE">COE东方快递</option>
+        <option value="XBWL">新邦物流</option>
+        <option value="GTO">国通快递</option>
+        <option value="HOTSCM">鸿桥供应链</option>
+        <option value="JTKD">捷特快递</option>
+        <option value="YDH">义达国际物流</option>
+        <option value="CSCY">长沙创一</option>
+        <option value="FEDEX">FEDEX联邦(国内件）</option>
+        <option value="BQXHM">北青小红帽</option>
+        <option value="JYM">加运美</option>
+        <option value="HXLWL">华夏龙物流</option>
+        <option value="SURE">速尔快递</option>
+        <option value="ZHQKD">汇强快递</option>
+        <option value="UC">优速快递</option>
+        <option value="JGSD">京广速递</option>
+        <option value="FAST">快捷速递</option>
+        <option value="CJKD">城际快递</option>
+        <option value="ANE">安能物流</option>
+        <option value="GSD">共速达</option>
+        <option value="SUBIDA">速必达物流</option>
+        <option value="JJKY">佳吉快运</option>
+        <option value="HLWL">恒路物流</option>
+        <option value="WXWL">万象物流</option>
+        <option value="CCES">CCES快递</option>
+        <option value="STWL">速腾快递</option>
+        <option value="YXKD">亿翔快递</option>
+        <option value="JXD">急先达</option>
+        <option value="ZYWL">中邮物流</option>
+        <option value="YZPY">邮政平邮/小包</option>
+        <option value="ZENY">增益快递</option>
+        <option value="AJ">安捷快递</option>
+        <option value="JLDT">嘉里物流</option>
+        <option value="ZTKY">中铁快运</option>
+        <option value="ST">速通物流</option>
+        <option value="MLWL">明亮物流</option>
+        <option value="BFDF">百福东方</option>
+        <option value="YADEX">源安达快递</option>
+        <option value="YFHEX">原飞航物流</option>
+        <option value="YTKD">运通快递</option>
+        <option value="HFWL">汇丰物流</option>
+        <option value="ZTE">众通快递</option>
+        <option value="ZTWL">中铁物流</option>
+        <option value="HPTEX">海派通物流公司</option>
+        <option value="MHKD">民航快递</option>
+        <option value="CNPEX">CNPEX中邮快递</option>
+        <option value="PCA">PCA Express</option>
+        <option value="FKD">飞康达</option>
+        <option value="RFEX">瑞丰速递</option>
+        <option value="GDEMS">广东邮政</option>
+        <option value="YFSD">亚风快递</option>
+        <option value="LB">龙邦快递</option>
+        <option value="AXD">安信达快递</option>
+        <option value="XJ">新杰物流</option>
+        <option value="XYT">希优特</option>
+        <option value="FEDEX_GJ">FEDEX联邦(国际件）</option>
+        <option value="CITY100">城市100</option>
+    </select>
+</p>
+<p>
+    <button id="btn">设置物流</button>
+</p>
+<pre id="output"></pre>
+
+<script src="https://code.jquery.com/jquery-2.2.4.min.js" charset="UTF-8"></script>
+
+<script>
+    function doIt() {
+        var str = $("#text").val()
+        var output = "";
+        str.split("\n").forEach(function (line) {
+            if (!line || !line.trim()) {
+                return;
+            }
+            var arr = line.trim().split(/\s+/)
+            if (arr.length != 2) {
+                return
+            }
+            output += line + "\n";
+            var url = 'http://admin-yijian.yy.com/order/updateOrdersSellerAddress?expressCode=' + arr[1] + '&expressEngName='+$("#wl").val()+'&orderSeq=' + arr[0]
+            $.ajax({
+                url: url,
+                dataType: "jsonp",
+                crossDomain: true,
+                xhrFields: {
+                    withCredentials: true
+                }
+            })
+        });
+        $("#output").text(output)
+    };
+    $("#btn").click(doIt)
+</script>
+</body>
+</html>
