@@ -182,7 +182,7 @@
                         var count = 0;
                         var endTime = dateList[0].getTime() + (this.cycle - 1) * 24 * 60 * 60 * 1000
                         for (var i = 1; i < dateList.length; ++i) {
-                            if (dateList[i].getTime() < endTime) {
+                            if (dateList[i].getTime() <= endTime) {
                                 count++
                             } else {
                                 break
