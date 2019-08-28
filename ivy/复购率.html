@@ -53,6 +53,36 @@
         </tbody>
     </table>
     </p>
+    <table border="1" cellspacing="0" cellpadding="0" v-show="resultTable.length">
+        <thead>
+        <th>下单人数</th>
+        <th>复购人数</th>
+        <th>2次复购人数</th>
+        <th>3次复购人数</th>
+        <th>4次及以上复购人数</th>
+        </thead>
+        <tbody>
+        <tr>
+            <td v-text="userStatics.total"></td>
+            <td v-text="userStatics.f2"></td>
+            <td v-text="userStatics.f3"></td>
+            <td v-text="userStatics.f4"></td>
+            <td v-text="userStatics.f5"></td>
+        </tr>
+        </tbody>
+    </table>
+    <table border="1" cellspacing="0" cellpadding="0" v-show="resultTable.length">
+        <thead>
+        <th>下单用户uid</th>
+        <th>复购次数</th>
+        </thead>
+        <tbody>
+        <tr v-for="user in userCount">
+            <td v-text="user.uid"></td>
+            <td v-text="user.count"></td>
+        </tr>
+        </tbody>
+    </table>
 </div>
 
 <script src="https://cdn.jsdelivr.net/npm/vue"></script>
@@ -64,11 +94,18 @@
                 inputStr: "",
                 cycle: 7,
                 cycleList: [7, 14, 30],
-                resultTable: []
+                resultTable: [],
+                userStatics: {
+                    total: 0,
+                    f2: 0,
+                    f3: 0,
+                    f4: 0,
+                    f5: 0
+                },
+                userCount: [],
             },
             computed: {
                 originData: function () {
-                    console.info(111)
                     var list = [];
                     try {
                         this.inputStr.split("\n").forEach(function (line) {
@@ -114,6 +151,63 @@
             },
             methods: {
                 exec: function () {
+                    this.execTable();
+                    this.execStatics();
+                },
+                execStatics: function () {
+                    var statics = {
+                        total: 0,
+                        f2: 0,
+                        f3: 0,
+                        f4: 0,
+                        f5: 0
+                    };
+                    var userCount = [];
+                    for (var uid in this.mapGroupUid) {
+                        statics.total++;
+                        var dateList = this.mapGroupUid[uid]
+                        if (dateList.length == 1) {
+                            continue;
+                        }
+                        var count = 0;
+                        var endTime = dateList[0].getTime() + (this.cycle - 1) * 24 * 60 * 60 * 1000
+                        for (var i = 1; i < dateList.length; ++i) {
+                            if (dateList[i].getTime() < endTime) {
+                                count++
+                            } else {
+                                break
+                            }
+                        }
+                        console.info(uid + "--" + count)
+                        userCount.push({
+                            uid: uid,
+                            count: count
+                        });
+                        if (count < 1){
+                            continue;
+                        }
+                        statics.f2++;
+                        switch (count) {
+                            case 1:
+                                break;
+                            case 2:
+                                statics.f3++;
+                                break;
+                            case 3:
+                                statics.f4++;
+                                break;
+                            default:
+                                statics.f5++;
+                                break;
+                        }
+                    }
+                    this.userStatics = statics;
+                    userCount.sort(function (u1, u2) {
+                        return u2.count - u1.count;
+                    });
+                    this.userCount = userCount
+                },
+                execTable: function () {
                     var resultTable = this.resultTable = [];
                     for (var i = 0; i < this.dateList.length; ++i) {
                         var date = this.dateList[i];
@@ -146,23 +240,17 @@
                             if (count <= 1) {
                                 return
                             }
+                            result.f2++;
                             switch (count) {
                                 case 2:
-                                    result.f2++;
                                     break;
                                 case 3:
-                                    result.f2++;
                                     result.f3++;
                                     break;
                                 case 4:
-                                    result.f2++;
-                                    result.f3++;
                                     result.f4++;
                                     break;
                                 default:
-                                    result.f2++;
-                                    result.f3++;
-                                    result.f4++;
                                     result.f5++;
                                     break;
                             }
