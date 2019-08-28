@@ -53,6 +53,7 @@
         </tbody>
     </table>
     </p>
+    <p>
     <table border="1" cellspacing="0" cellpadding="0" v-show="resultTable.length">
         <thead>
         <th>下单人数</th>
@@ -71,6 +72,8 @@
         </tr>
         </tbody>
     </table>
+    </p>
+    <p>
     <table border="1" cellspacing="0" cellpadding="0" v-show="resultTable.length">
         <thead>
         <th>下单用户uid</th>
@@ -78,11 +81,12 @@
         </thead>
         <tbody>
         <tr v-for="user in userCount">
-            <td v-text="user.uid"></td>
+            <td :title="tipsDetail(user.uid)" v-text="user.uid"></td>
             <td v-text="user.count"></td>
         </tr>
         </tbody>
     </table>
+    </p>
 </div>
 
 <script src="https://cdn.jsdelivr.net/npm/vue"></script>
@@ -144,7 +148,9 @@
                     var map = {};
                     this.originData.forEach(function (data) {
                         (map[data.uid] || (map[data.uid] = [])).push(data.date);
-                        map[data.uid].sort()
+                        map[data.uid].sort(function (d1, d2) {
+                            return d1.getTime() - d2.getTime()
+                        })
                     });
                     return map
                 }
@@ -167,6 +173,10 @@
                         statics.total++;
                         var dateList = this.mapGroupUid[uid]
                         if (dateList.length == 1) {
+                            userCount.push({
+                                uid: uid,
+                                count: 0
+                            });
                             continue;
                         }
                         var count = 0;
@@ -260,6 +270,12 @@
                 },
                 percent: function (val) {
                     return Number(val * 100).toFixed(2) + "%"
+                },
+                tipsDetail : function (uid) {
+                    var dateList = this.mapGroupUid[uid]
+                    return dateList.map(function (date) {
+                        return (1900 + date.getYear()) + "-" + (date.getMonth() + 1) + "-" + date.getDate()
+                    }).join("\n");
                 }
             }
 
